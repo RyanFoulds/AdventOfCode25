@@ -1,7 +1,6 @@
 package xyz.foulds.aoc.year25.day02;
 
 
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 public class Range {
@@ -55,10 +54,6 @@ public class Range {
         } else {
             return Long.parseLong("9".repeat((int) candidateDigitCount));
         }
-    }
-
-    public static long repeat(final long input) {
-        return repeat(input, 2);
     }
 
     public static long repeat(final long input, final long times) {
