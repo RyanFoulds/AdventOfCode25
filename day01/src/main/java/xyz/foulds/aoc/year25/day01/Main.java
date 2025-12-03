@@ -1,7 +1,24 @@
 package xyz.foulds.aoc.year25.day01;
 
-public class Main {
-    static void main(final String[] args) {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+public class Main {
+    static void main(final String[] args) throws IOException {
+        if (args.length != 1)
+        {
+            throw new IllegalArgumentException("Please provide a single file path for the puzzle input.");
+        }
+
+        final Dial dial = new Dial(100L, 50L);
+
+        Files.readAllLines(Paths.get(args[0]))
+                .stream()
+                .map(String::trim)
+                .forEachOrdered(line -> dial.turn(Direction.valueOf(line.substring(0, 1)), Long.parseLong(line.substring(1))));
+
+        IO.println(dial.getTimesAtZero());
+        IO.println(dial.getTimesPassingZero());
     }
 }
