@@ -18,5 +18,6 @@ public class Main {
         final var manifold = new Manifold(lines);
 
         IO.println(manifold.getSplitCountPartOne());
+        IO.println(manifold.getSplitCountPartTwo());
     }
 }

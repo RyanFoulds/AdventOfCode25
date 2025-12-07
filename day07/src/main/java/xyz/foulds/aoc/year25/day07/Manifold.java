@@ -1,8 +1,13 @@
 package xyz.foulds.aoc.year25.day07;
 
+import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Stack;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Manifold {
     private static final char SPLITTER = '^';
@@ -24,28 +29,52 @@ public class Manifold {
 
     public long getSplitCountPartOne() {
         var splitCount = 0L;
-        final var stack = new Stack<Coordinate>();
+        final Queue<Coordinate> queue = new ArrayDeque<>();
         final var cache = new HashSet<Coordinate>();
-        stack.push(startingPoint);
-        while (!stack.isEmpty()) {
-            final var current = stack.pop();
-            if (grid[current.i()][current.j()] == SPLITTER) {
-                splitCount++;
-                final var next = current.split();
-                for (var n : next) {
-                    if (n.inBounds(grid) && !cache.contains(n)) {
-                        stack.push(n);
-                        cache.add(n);
-                    }
-                }
-            } else {
-                final var next = current.moveDown();
-                if (next.inBounds(grid) && !cache.contains(next)) {
-                    stack.push(next);
-                    cache.add(next);
+        queue.offer(startingPoint);
+        while (!queue.isEmpty()) {
+            final var current = queue.poll();
+            final boolean isSplit = grid[current.i()][current.j()] == SPLITTER;
+            final var next = isSplit ? current.split() : new Coordinate[]{current.moveDown()};
+            if (isSplit) splitCount++;
+            for (var n : next) {
+                if (n.inBounds(grid) && !cache.contains(n)) {
+                    queue.offer(n);
+                    cache.add(n);
                 }
             }
         }
         return splitCount;
+    }
+
+    public long getSplitCountPartTwo() {
+        final var results = new HashMap<Coordinate, Long>();
+        final var visited = new HashSet<Coordinate>();
+        final var queue = new PriorityQueue<>(Comparator.comparing(Coordinate::i));
+        results.put(startingPoint, 1L);
+        queue.offer(startingPoint);
+
+        while (!queue.isEmpty()) {
+            final var current = queue.poll();
+            final var quantity = results.get(current);
+            if (current.i() == grid.length - 1) {
+                continue;
+            }
+
+            final var nextOnes = grid[current.i() + 1][current.j()] == SPLITTER ? current.split() : new Coordinate[]{current.moveDown()};
+            for (var n : nextOnes) {
+                if (n.inBounds(grid)) {
+                    results.merge(n, quantity, Long::sum);
+                    if (visited.add(n)) {
+                        queue.offer(n);
+                    }
+                }
+            }
+        }
+
+        return results.entrySet().stream()
+                .filter(entry -> entry.getKey().i() == grid.length - 1)
+                .mapToLong(Map.Entry::getValue)
+                .sum();
     }
 }
