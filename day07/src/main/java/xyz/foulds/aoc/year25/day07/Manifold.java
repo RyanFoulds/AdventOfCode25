@@ -1,12 +1,10 @@
 package xyz.foulds.aoc.year25.day07;
 
 import java.util.ArrayDeque;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Manifold {
@@ -50,7 +48,7 @@ public class Manifold {
     public long getSplitCountPartTwo() {
         final var results = new HashMap<Coordinate, Long>();
         final var visited = new HashSet<Coordinate>();
-        final var queue = new PriorityQueue<>(Comparator.comparing(Coordinate::i));
+        final Queue<Coordinate> queue = new ArrayDeque<>();
         results.put(startingPoint, 1L);
         queue.offer(startingPoint);
 
