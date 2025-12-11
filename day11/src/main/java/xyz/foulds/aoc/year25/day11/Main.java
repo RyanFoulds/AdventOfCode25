@@ -3,8 +3,6 @@ package xyz.foulds.aoc.year25.day11;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class Main {
     static void main(final String[] args) throws IOException {
