@@ -16,7 +16,12 @@ public class Main {
                 .toList();
         final var worksheet = new Worksheet(lines);
 
-        IO.println(worksheet.getSumOfPartOneAnswers());
-        IO.println(worksheet.getSumOfPartTwoAnswers());
+        final long start = System.nanoTime();
+        final long p1 = worksheet.getSumOfPartOneAnswers();
+        final long p2 = worksheet.getSumOfPartTwoAnswers();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

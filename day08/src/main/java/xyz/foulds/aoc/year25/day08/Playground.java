@@ -25,7 +25,8 @@ public class Playground {
     }
 
     // Solve both parts together today, since one is just a continuation of the other.
-    public void solve() {
+    public long[] solve() {
+        var partOne = 0L;
         final Map<Point, Integer> circuitHeads = new HashMap<>();
         for (int i = 0; i < sortedDistanceCache.size(); i++) {
             final var connection = sortedDistanceCache.get(i);
@@ -50,17 +51,16 @@ public class Playground {
             }
 
             if (i == connectionsToMake - 1) {
-                final var partOne = circuitHeads.values().stream()
+                partOne = circuitHeads.values().stream()
                         .sorted(Comparator.reverseOrder())
                         .toList().subList(0, 3)
                         .stream().reduce((a, b) -> a * b)
                         .get();
-                IO.println(partOne);
             } else if (circuitHeads.size() == 1 && circuitHeads.containsValue(points.size())) {
                 final var partTwo = sortedDistanceCache.get(i).getWallDistance();
-                IO.println(partTwo);
-                return;
+                return new long[]{partOne, partTwo};
             }
         }
+        return new long[]{partOne, 0L};
     }
 }

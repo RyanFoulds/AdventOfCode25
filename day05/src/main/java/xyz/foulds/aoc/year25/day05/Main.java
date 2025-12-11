@@ -28,13 +28,16 @@ public class Main {
                     }
                 });
 
-        final var partOne = ids.stream()
+        final long start = System.nanoTime();
+        final long p1 = ids.stream()
                 .mapToLong(Long::longValue)
                 .filter(id -> ranges.stream().anyMatch(range -> range.contains(id)))
                 .count();
-        IO.println(partOne);
-
         final var combined = new Ranges(ranges);
-        IO.println(combined.getCombinedSize());
+        final long p2 = combined.getCombinedSize();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

@@ -19,9 +19,12 @@ public class Main {
                 .map(Range::new)
                 .toList();
 
+        final long start = System.nanoTime();
+        final long p1 = ranges.stream().flatMapToLong(range -> range.getCandidates(2)).sum();
+        final long p2 = ranges.stream().mapToLong(Range::getSumOfAllCandidates).sum();
+        final long end = System.nanoTime();
 
-        IO.println(ranges.stream().flatMapToLong(range -> range.getCandidates(2)).sum());
-        IO.println(ranges.stream().mapToLong(Range::getSumOfAllCandidates).sum());
-
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

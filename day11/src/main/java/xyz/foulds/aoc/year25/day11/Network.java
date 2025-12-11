@@ -44,7 +44,7 @@ public class Network {
         } else if ("out".equals(start)) {
             return 0;
         }
-        final var answer = devicesById.get(start).stream()
+        final var answer = devicesById.getOrDefault(start, List.of()).stream()
                 .mapToLong(nextStart -> recurse(nextStart, end, cache))
                 .sum();
         cache.put(start, answer);

@@ -19,7 +19,12 @@ public class Main {
                 .map(Bank::new)
                 .toList();
 
-        IO.println(batteryBanks.stream().mapToLong(bank -> bank.getMaxJoltage(2)).sum());
-        IO.println(batteryBanks.stream().mapToLong(bank -> bank.getMaxJoltage(12)).sum());
+        final long start = System.nanoTime();
+        final long p1 = batteryBanks.stream().mapToLong(bank -> bank.getMaxJoltage(2)).sum();
+        final long p2 = batteryBanks.stream().mapToLong(bank -> bank.getMaxJoltage(12)).sum();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

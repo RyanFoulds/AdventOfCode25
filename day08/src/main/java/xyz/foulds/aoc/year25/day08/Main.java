@@ -19,6 +19,11 @@ public class Main {
                 .map(Point::new)
                 .toList();
         final var playground = new Playground(points, points.size() > 20 ? 1000 : 10);
-        playground.solve();
+        final long start = System.nanoTime();
+        final long[] solution = playground.solve();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(solution[0], solution[1], millis));
     }
 }

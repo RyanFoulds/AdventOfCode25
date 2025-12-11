@@ -17,7 +17,12 @@ public class Main {
                 .toList();
         final var manifold = new Manifold(lines);
 
-        IO.println(manifold.getSplitCountPartOne());
-        IO.println(manifold.getSplitCountPartTwo());
+        final long start = System.nanoTime();
+        final long p1 = manifold.getSplitCountPartOne();
+        final long p2 = manifold.getSplitCountPartTwo();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

@@ -18,7 +18,12 @@ public class Main {
                 .map(String::trim)
                 .forEachOrdered(line -> dial.turn(Direction.valueOf(line.substring(0, 1)), Long.parseLong(line.substring(1))));
 
-        IO.println(dial.getTimesAtZero());
-        IO.println(dial.getTimesPassingZero());
+        final long start = System.nanoTime();
+        final long p1 = dial.getTimesAtZero();
+        final long p2 = dial.getTimesPassingZero();
+        final long end = System.nanoTime();
+
+        final var micros = (end - start) / 1_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fµs".formatted(p1, p2, micros));
     }
 }

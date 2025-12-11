@@ -18,7 +18,12 @@ public class Main {
                 .toList();
         final Grid grid = new Grid(input);
 
-        IO.println(grid.getAccessibleCount());
-        IO.println(grid.getAllAccessibleCount());
+        final long start = System.nanoTime();
+        final long p1 = grid.getAccessibleCount();
+        final long p2 = grid.getAllAccessibleCount();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

@@ -19,7 +19,12 @@ public class Main {
 
         final var floor = new Floor(coords);
 
-        IO.println(floor.solvePartOne());
-        IO.println(floor.solvePartTwo());
+        final long start = System.nanoTime();
+        final long p1 = floor.solvePartOne();
+        final long p2 = floor.solvePartTwo();
+        final long end = System.nanoTime();
+
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 }

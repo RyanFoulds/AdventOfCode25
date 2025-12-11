@@ -24,9 +24,13 @@ public class Main {
                 .map(Machine::new)
                 .toList();
 
-        IO.println(solveInParallel(machines, m -> m::findFewestPresses));
-        IO.println(solveInParallel(machines, m -> m::findFewestJoltagePresses));
+        final long start = System.nanoTime();
+        final long p1 = solveInParallel(machines, m -> m::findFewestPresses);
+        final long p2 = solveInParallel(machines, m -> m::findFewestJoltagePresses);
+        final long end = System.nanoTime();
 
+        final var millis = (end - start) / 1_000_000d;
+        IO.println("Part 1: %d\nPart 2: %d\nTook: %.1fms".formatted(p1, p2, millis));
     }
 
     private static long solveInParallel(final List<Machine> machines, final Function<Machine, Supplier<Long>> function) {
